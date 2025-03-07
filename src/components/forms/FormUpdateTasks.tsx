@@ -4,13 +4,16 @@ import { updateTask } from "../../services/updateTask";
 import { User } from "../../schemas/Users";
 import { getAllUsers } from "../../services/getAllUsers";
 import { useModalContext } from "../../context/ModalContext";
+import { createTask } from "../../services/createTask";
 
 export const FormUpdateTasks = ({
   task,
   onUpdate,
+  variant,
 }: {
   task: Task;
   onUpdate: () => void;
+  variant: "create" | "update";
 }) => {
   const [users, setUsers] = useState<User[]>();
   const [taskData, setTaskData] = useState({
@@ -25,7 +28,7 @@ export const FormUpdateTasks = ({
   async function handleUpdateTask(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const taskUpdated = await updateTask(task.id as number, taskData);
+      const taskUpdated = await updateTask(task?.id as number, taskData);
       onUpdate();
       console.log(taskUpdated);
       closeModal();
@@ -35,14 +38,25 @@ export const FormUpdateTasks = ({
     }
   }
 
+  async function handleCreateTask(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      const taskCreated = await createTask(taskData);
+      onUpdate();
+      console.log(taskCreated);
+      return taskCreated;
+    } catch (error) {
+      console.error("Error al crear tarea:", error);
+    }
+  }
+
   async function handleGetUsers() {
     try {
       const users = await getAllUsers();
-      console.log(users);
       setUsers(users);
       return users;
     } catch (error) {
-      console.error("Error al crear tarea:", error);
+      console.error("Error al obtener usuarios:", error);
     }
   }
 
@@ -52,33 +66,33 @@ export const FormUpdateTasks = ({
     >
   ) => {
     const { name, value } = e.target;
-    console.log(`Campo cambiado: ${name}, Nuevo valor: ${value}`);
+    // console.log(`Campo cambiado: ${name}, Nuevo valor: ${value}`);
     setTaskData((prev) => ({
       ...prev,
       [name]: name === "user_id" ? Number(value) : value, // Convertir `user_id` a número
     }));
   };
 
-  useEffect(() => {
-    console.log("taskData actualizado:", taskData);
-  }, [taskData]);
-
-  useEffect(() => {
-    setTaskData({
-      user_id: task.user_id,
-      title: task.title,
-      description: task.description,
-      status: task.status,
-      due_date: task.due_date,
-    });
-  }, [task]);
+  // useEffect(() => {
+  //   setTaskData({
+  //     user_id: task.user_id,
+  //     title: task.title,
+  //     description: task.description,
+  //     status: task.status,
+  //     due_date: task.due_date,
+  //   });
+  // }, [task]);
 
   useEffect(() => {
     handleGetUsers();
   }, []);
 
+  if (variant === "create") {
+    (task.title = ""), (task.description = "");
+  }
+
   return (
-    <form onSubmit={handleUpdateTask}>
+    <form onSubmit={variant === "create" ? handleCreateTask : handleUpdateTask}>
       <div className="mb-5">
         <label htmlFor="title" className="block mb-2 font-medium">
           Título
@@ -87,7 +101,7 @@ export const FormUpdateTasks = ({
           type="text"
           id="title"
           name="title"
-          defaultValue={taskData.title}
+          value={taskData.title}
           onChange={handleChange}
           required
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -101,7 +115,7 @@ export const FormUpdateTasks = ({
           id="description"
           name="description"
           rows={4}
-          defaultValue={taskData.description}
+          value={taskData.description}
           onChange={handleChange}
           placeholder="Da una descripción detallada de la tarea"
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
@@ -118,7 +132,7 @@ export const FormUpdateTasks = ({
           required
           value={taskData.user_id}
           onChange={handleChange}
-          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           {users &&
             users.map((user) => (
@@ -132,7 +146,7 @@ export const FormUpdateTasks = ({
       <div className="flex justify-end mt-6">
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
         >
           Guardar cambios
         </button>

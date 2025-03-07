@@ -39,7 +39,7 @@ export default function ModalWithForm({
                 {localize.title}
               </h2>
               <button
-                className="text-gray-400 hover:text-white hover:bg-white/10 p-1 rounded-md"
+                className="text-gray-400 hover:text-white hover:bg-red-600/60 px-4 py-2 rounded-3xl cursor-pointer"
                 onClick={closeModal}
                 aria-label="Close"
               >

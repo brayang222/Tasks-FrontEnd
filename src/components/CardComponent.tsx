@@ -7,7 +7,6 @@ import {
   Image,
 } from "@heroui/react";
 import { Task } from "../schemas/Tasks";
-import { createTask } from "../services/createTask";
 import { deleteTask } from "../services/deleteTask";
 import ModalTaskForm from "./ModalWithForm";
 import { FormUpdateTasks } from "./forms/FormUpdateTasks";
@@ -19,24 +18,6 @@ export const CardComponent = ({
   task: Task;
   onUpdate: () => void;
 }) => {
-  async function handleCreateTask() {
-    const task = {
-      user_id: 3,
-      title: "Cargar casco",
-      description: "Cargar el casco antes de salir",
-      status: "PENDING",
-      due_date: new Date("2025-03-10"),
-    };
-    try {
-      const taskCreated = await createTask(task);
-      onUpdate();
-      console.log(taskCreated);
-      return taskCreated;
-    } catch (error) {
-      console.error("Error al crear tarea:", error);
-    }
-  }
-
   async function handleDeleteTask(id: number) {
     try {
       const taskDeleted = await deleteTask(id);
@@ -72,15 +53,9 @@ export const CardComponent = ({
         <p>{task.description}</p>
       </CardBody>
       <Divider className="text-gray-600" />
-      <CardFooter className="flex gap-4">
+      <CardFooter className="flex flex-col gap-4">
         <h3 className="text-gray-400">Creado el: </h3>
         <p>{task.created_at?.toString().split("T")}</p>
-        <button
-          onClick={handleCreateTask}
-          className="border-2 border-amber-50 p-4 cursor-pointer"
-        >
-          Create
-        </button>
         <button
           className="cursor-pointer"
           onClick={() => task?.id !== undefined && handleDeleteTask(task.id)}
@@ -92,10 +67,10 @@ export const CardComponent = ({
             title: "Editar",
             buttonText: "Editar tarea",
             description:
-              "Haz los cambios de la tarea. Dale a guardar cuando termines.",
+              "Haz los cambios de la tarea. Dale a 'guardar' cuando termines.",
           }}
         >
-          <FormUpdateTasks task={task} onUpdate={onUpdate} />
+          <FormUpdateTasks task={task} onUpdate={onUpdate} variant="update" />
         </ModalTaskForm>
       </CardFooter>
     </Card>

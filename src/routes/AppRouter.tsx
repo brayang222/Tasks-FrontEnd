@@ -5,10 +5,12 @@ import { NotFound } from "../components/NotFound";
 
 export default function AppRouter() {
   return (
-    <Routes>
-      <Route path="/*" element={<PublicRoutes />} />
-      <Route path="/dashboard/*" element={<PrivateRoutes />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <div className="min-h-[100vh]">
+      <Routes>
+        <Route path="/*" element={<PublicRoutes />} />
+        <Route path="/dashboard/*" element={<PrivateRoutes />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }

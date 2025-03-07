@@ -25,7 +25,11 @@ export const NotFound = () => {
             className="flex items-center justify-center gap-2 px-4 py-2 text-white hover:bg-white/10 transition-colors duration-200 rounded-md"
             onClick={() => window.history.back()}
           >
-            <span className="icon-[mdi--home] text-5xl text-blue-500"></span>
+            <i
+              className="icon-[material-symbols--arrow-back]"
+              role="img"
+              aria-hidden="true"
+            />
             <span>Go Back</span>
           </button>
         </div>
