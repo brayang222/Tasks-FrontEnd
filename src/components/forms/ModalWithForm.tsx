@@ -1,5 +1,5 @@
-import { ModalContext } from "../context/ModalContext";
-import { useModal } from "../hooks/useModal";
+import { ModalContext } from "../../context/ModalContext";
+import { useModal } from "../../hooks/useModal";
 
 interface Localize {
   title: string;
@@ -10,19 +10,20 @@ interface Localize {
 export default function ModalWithForm({
   children,
   localize,
+  classes,
+  icon,
 }: {
   children: React.ReactNode;
   localize: Localize;
+  classes: string;
+  icon?: React.ReactNode;
 }) {
   const { isOpen, openModal, closeModal, modalRef } = useModal();
-
   return (
     <>
-      <button
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
-        onClick={openModal}
-      >
+      <button className={classes} onClick={openModal}>
         {localize.buttonText}
+        {icon && icon}
       </button>
 
       {isOpen && (

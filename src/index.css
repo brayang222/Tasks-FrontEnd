@@ -4,6 +4,8 @@
 @theme {
   --color-primary: #212121;
   --text-color: #e4e2dd;
+  --color-secondary: #3f3f3f;
+  --color-tertiary: #696969;
 }
 
 body {
@@ -13,6 +15,14 @@ body {
 
 .bg-primary {
   background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-tertiary);
 }
 
 .text-primary {

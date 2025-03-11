@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Task } from "../../schemas/Tasks";
+import { STATUSES, Task } from "../../schemas/Tasks";
 import { updateTask } from "../../services/updateTask";
 import { User } from "../../schemas/Users";
 import { getAllUsers } from "../../services/getAllUsers";
 import { useModalContext } from "../../context/ModalContext";
 import { createTask } from "../../services/createTask";
 
-export const FormUpdateTasks = ({
+export const FormTasks = ({
   task,
   onUpdate,
   variant,
@@ -120,6 +120,26 @@ export const FormUpdateTasks = ({
           placeholder="Da una descripción detallada de la tarea"
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
         ></textarea>
+      </div>
+
+      <div className="mb-5">
+        <label htmlFor="status" className="block mb-2 font-medium">
+          ESTADO:
+        </label>
+        <select
+          id="status"
+          name="status"
+          required
+          value={taskData.status}
+          onChange={handleChange}
+          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+        >
+          {Object.values(STATUSES).map((status) => (
+            <option value={String(status)} key={String(status)}>
+              {String(status)}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="mb-5">

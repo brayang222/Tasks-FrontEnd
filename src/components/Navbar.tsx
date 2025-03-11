@@ -1,11 +1,4 @@
-import {
-  Button,
-  Link,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@heroui/react";
+import { Button, Link } from "@heroui/react";
 
 export const AcmeLogo = () => {
   return (
@@ -22,40 +15,30 @@ export const AcmeLogo = () => {
 
 export const NavbarComponent = () => {
   return (
-    <Navbar isBordered className="bg-black p-3 flex justify-around w-full">
-      <NavbarBrand>
+    <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2">
+      <div>
         <a href="/" className="flex items-center">
           <AcmeLogo />
           <p className="font-bold text-inherit">TASKS</p>
         </a>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current="page" href="#">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+      </div>
+      <li className="hidden sm:flex gap-4 *:font-medium">
+        <Link color="foreground" href="#">
+          Features
+        </Link>
+        <Link aria-current="page" href="/users">
+          Users
+        </Link>
+        <Link color="foreground" href="#">
+          Integrations
+        </Link>
+      </li>
+      <div className="flex gap-4 *:font-medium">
+        <Link href="/login">Login</Link>
+        <Link color="primary" href="/register">
+          Sign Up
+        </Link>
+      </div>
+    </div>
   );
 };

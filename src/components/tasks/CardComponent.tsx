@@ -9,7 +9,7 @@ import {
 import { Task } from "../schemas/Tasks";
 import { deleteTask } from "../services/deleteTask";
 import ModalTaskForm from "./ModalWithForm";
-import { FormUpdateTasks } from "./forms/FormUpdateTasks";
+import { FormTasks } from "./forms/FormTasks";
 
 export const CardComponent = ({
   task,
@@ -63,6 +63,7 @@ export const CardComponent = ({
           Delete
         </button>
         <ModalTaskForm
+          classes="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
           localize={{
             title: "Editar",
             buttonText: "Editar tarea",
@@ -70,7 +71,7 @@ export const CardComponent = ({
               "Haz los cambios de la tarea. Dale a 'guardar' cuando termines.",
           }}
         >
-          <FormUpdateTasks task={task} onUpdate={onUpdate} variant="update" />
+          <FormTasks task={task} onUpdate={onUpdate} variant="update" />
         </ModalTaskForm>
       </CardFooter>
     </Card>

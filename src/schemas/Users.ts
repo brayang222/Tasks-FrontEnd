@@ -1,8 +1,12 @@
+import { ROLES } from "../enum/roles.enu";
+
 export interface User {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;
   phone?: string;
-  created_at: Date;
+  role?: ROLES;
+  avatar?: string;
+  created_at?: Date;
 }
