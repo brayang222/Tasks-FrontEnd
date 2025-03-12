@@ -3,6 +3,7 @@ import { STATUSES, Task } from "../../schemas/Tasks";
 import { deleteTask } from "../../services/deleteTask";
 import { FormTasks } from "../forms/FormTasks";
 import ModalWithForm from "../forms/ModalWithForm";
+import { useCloseModal } from "../../hooks/useCloseModal";
 
 interface TaskCardProps {
   task: Task;
@@ -36,6 +37,8 @@ const formatDate = (dateString: string) => {
   }).format(date);
 };
 export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const statusColor = getStatusColor(task.status);
   const statusText =
     task.status.charAt(0).toUpperCase() +
@@ -52,33 +55,7 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
     }
   }
 
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  function handleShowActions() {
-    setIsOpen(!isOpen);
-  }
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  useCloseModal(dropdownRef, isOpen, () => setIsOpen(false));
 
   return (
     <div className="w-full min-w-80 max-w-96 rounded-lg bg-black border border-white shadow-md h-full flex flex-col ">
@@ -108,23 +85,23 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
         </div>
 
         {/* Dropdown Menu (simplified) */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={handleShowActions}
-            className="bg-gray-800 text-white px-3 py-0.5 rounded-lg"
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-gray-800 text-white px-3 py-0.5 rounded-lg cursor-pointer"
           >
             ...
           </button>
 
           {isOpen && (
             <div
-              ref={dropdownRef}
+              // ref={dropdownRef}
               className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-md shadow-lg z-10 border border-gray-700"
             >
               <div className="py-1 px-2 text-sm text-gray-300 border-b border-gray-700">
                 Acciones
               </div>
-              <div className="py-1">
+              <div className="py-1 *:cursor-pointer">
                 <ModalWithForm
                   classes="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-800"
                   localize={{
@@ -166,7 +143,7 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
                   onClick={() =>
                     task?.id !== undefined && handleDeleteTask(task.id)
                   }
-                  className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800"
+                  className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800 cursor-pointer"
                 >
                   Eliminar
                 </button>

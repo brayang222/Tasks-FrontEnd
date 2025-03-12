@@ -1,6 +1,6 @@
 import { Link } from "@heroui/react";
-import { isAuthenticated, logOut } from "../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../utils/auth";
+import { UserProfileDropdown } from "./users/UserProfileDropDown";
 
 export const AcmeLogo = () => {
   return (
@@ -17,37 +17,39 @@ export const AcmeLogo = () => {
 
 export const NavbarComponent = () => {
   const auth = isAuthenticated();
-  const navigate = useNavigate();
+  console.log(auth.user.name);
 
   return (
-    <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2">
+    <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2 z-10">
       <a href="/" className="flex items-center">
         <AcmeLogo />
         <p className="font-bold text-inherit">TASKS</p>
       </a>
-      {/* {auth?.isAuth && auth.role === "admin" ? ( */}
-      <li className="hidden sm:flex gap-7 *:font-medium">
-        <Link color="foreground" href="#">
-          Features
-        </Link>
-        <Link aria-current="page" href="/admin/users">
-          Users
-        </Link>
-        <Link color="foreground" href="#">
-          Integrations
-        </Link>
-      </li>
-      {/* ) : (
-        <h3>{auth?.role}</h3>
-      )} */}
       {auth?.isAuth ? (
-        <button className="cursor-pointer" onClick={() => logOut(navigate)}>
-          LogOut
-        </button>
+        <>
+          <li className="hidden sm:flex gap-7 *:font-medium">
+            <Link color="foreground" href="#">
+              Tareas
+            </Link>
+            {auth.user.role === "admin" ? (
+              <Link color="foreground" aria-current="page" href="/admin/users">
+                Users
+              </Link>
+            ) : (
+              <></>
+            )}
+            <Link color="foreground" href="#">
+              Mis Tareas
+            </Link>
+          </li>
+          <UserProfileDropdown user={auth.user} />
+        </>
       ) : (
         <div className="flex gap-4 *:font-medium">
-          <Link href="/login">Login</Link>
-          <Link color="primary" href="/register">
+          <Link href="/login" color="foreground">
+            Login
+          </Link>
+          <Link color="foreground" href="/register">
             Sign Up
           </Link>
         </div>

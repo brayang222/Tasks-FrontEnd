@@ -21,9 +21,10 @@ export function Login() {
       setIsLoading(true);
       const logguedUser = await login(user);
       setToken(JSON.stringify(logguedUser));
-      console.log(logguedUser);
+      // console.log(logguedUser);
 
       navigate("/");
+      window.location.reload();
       return logguedUser;
     } catch (err) {
       console.log(user);
