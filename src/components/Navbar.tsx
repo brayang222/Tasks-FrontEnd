@@ -1,4 +1,6 @@
-import { Button, Link } from "@heroui/react";
+import { Link } from "@heroui/react";
+import { isAuthenticated, logOut } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 export const AcmeLogo = () => {
   return (
@@ -14,31 +16,42 @@ export const AcmeLogo = () => {
 };
 
 export const NavbarComponent = () => {
+  const auth = isAuthenticated();
+  const navigate = useNavigate();
+
   return (
     <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2">
-      <div>
-        <a href="/" className="flex items-center">
-          <AcmeLogo />
-          <p className="font-bold text-inherit">TASKS</p>
-        </a>
-      </div>
-      <li className="hidden sm:flex gap-4 *:font-medium">
+      <a href="/" className="flex items-center">
+        <AcmeLogo />
+        <p className="font-bold text-inherit">TASKS</p>
+      </a>
+      {/* {auth?.isAuth && auth.role === "admin" ? ( */}
+      <li className="hidden sm:flex gap-7 *:font-medium">
         <Link color="foreground" href="#">
           Features
         </Link>
-        <Link aria-current="page" href="/users">
+        <Link aria-current="page" href="/admin/users">
           Users
         </Link>
         <Link color="foreground" href="#">
           Integrations
         </Link>
       </li>
-      <div className="flex gap-4 *:font-medium">
-        <Link href="/login">Login</Link>
-        <Link color="primary" href="/register">
-          Sign Up
-        </Link>
-      </div>
+      {/* ) : (
+        <h3>{auth?.role}</h3>
+      )} */}
+      {auth?.isAuth ? (
+        <button className="cursor-pointer" onClick={() => logOut(navigate)}>
+          LogOut
+        </button>
+      ) : (
+        <div className="flex gap-4 *:font-medium">
+          <Link href="/login">Login</Link>
+          <Link color="primary" href="/register">
+            Sign Up
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

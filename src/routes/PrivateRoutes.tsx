@@ -1,13 +1,19 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-
-const isAuthenticated = () => !!localStorage.getItem("token");
+import { isAuthenticated } from "../utils/auth";
+import UserList from "../components/users/UserList";
 
 export function PrivateRoutes() {
-  return isAuthenticated() ? (
+  const auth = isAuthenticated();
+  console.log("Auth Status:", auth);
+
+  if (!auth.isAuth) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
     <Routes>
       <Route path="/" />
+      <Route path="/users" element={<UserList />} />
     </Routes>
-  ) : (
-    <Navigate to="/" />
   );
 }

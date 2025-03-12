@@ -5,6 +5,7 @@ import { User } from "../../schemas/Users";
 import { getAllUsers } from "../../services/getAllUsers";
 import { useModalContext } from "../../context/ModalContext";
 import { createTask } from "../../services/createTask";
+import { handleChange } from "../../utils/handleChange";
 
 export const FormTasks = ({
   task,
@@ -60,29 +61,6 @@ export const FormTasks = ({
     }
   }
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    // console.log(`Campo cambiado: ${name}, Nuevo valor: ${value}`);
-    setTaskData((prev) => ({
-      ...prev,
-      [name]: name === "user_id" ? Number(value) : value, // Convertir `user_id` a número
-    }));
-  };
-
-  // useEffect(() => {
-  //   setTaskData({
-  //     user_id: task.user_id,
-  //     title: task.title,
-  //     description: task.description,
-  //     status: task.status,
-  //     due_date: task.due_date,
-  //   });
-  // }, [task]);
-
   useEffect(() => {
     handleGetUsers();
   }, []);
@@ -102,7 +80,7 @@ export const FormTasks = ({
           id="title"
           name="title"
           value={taskData.title}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setTaskData)}
           required
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
@@ -116,7 +94,7 @@ export const FormTasks = ({
           name="description"
           rows={4}
           value={taskData.description}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setTaskData)}
           placeholder="Da una descripción detallada de la tarea"
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
         ></textarea>
@@ -131,7 +109,7 @@ export const FormTasks = ({
           name="status"
           required
           value={taskData.status}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setTaskData)}
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           {Object.values(STATUSES).map((status) => (
@@ -151,7 +129,7 @@ export const FormTasks = ({
           name="user_id"
           required
           value={taskData.user_id}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setTaskData)}
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           {users &&

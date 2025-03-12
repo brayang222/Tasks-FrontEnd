@@ -4,6 +4,7 @@ import { useModalContext } from "../../context/ModalContext";
 import { updateUser } from "../../services/updateUser";
 import { createUser } from "../../services/createUser";
 import { ROLES } from "../../enum/roles.enu";
+import { handleChange } from "../../utils/handleChange";
 
 export const FormUser = ({
   user,
@@ -43,6 +44,7 @@ export const FormUser = ({
     try {
       const userUpdated = await updateUser(user?.id as number, userData);
       console.log(userData);
+      console.log(userUpdated);
       onUpdate();
       closeModal();
       return userUpdated;
@@ -51,21 +53,11 @@ export const FormUser = ({
     }
   }
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    console.log(`Campo cambiado: ${name}, Nuevo valor: ${value}`);
-    setUserData((prev) => ({
-      ...prev,
-      [name]: name === "id" ? Number(value) : value,
-    }));
-  };
-
   return (
-    <form onSubmit={variant === "create" ? handleCreateUser : handleUpdateUser}>
+    <form
+      onSubmit={variant === "create" ? handleCreateUser : handleUpdateUser}
+      className=" *:flex *:flex-col *:items-start"
+    >
       <div className="mb-5">
         <label htmlFor="name" className="block mb-2 font-medium">
           Nombre
@@ -75,7 +67,7 @@ export const FormUser = ({
           id="name"
           name="name"
           defaultValue={userData.name}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setUserData)}
           required
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
@@ -89,7 +81,7 @@ export const FormUser = ({
           id="email"
           name="email"
           defaultValue={userData.email}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setUserData)}
           required
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
@@ -103,7 +95,7 @@ export const FormUser = ({
           id="phone"
           name="phone"
           defaultValue={userData.phone}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setUserData)}
           required
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
@@ -118,7 +110,7 @@ export const FormUser = ({
             id="password"
             name="password"
             value={userData.password}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, setUserData)}
             required
             className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
@@ -136,7 +128,7 @@ export const FormUser = ({
           name="role"
           required
           value={userData.role}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setUserData)}
           className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           <option>admin</option>
@@ -155,7 +147,7 @@ export const FormUser = ({
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
         >
-          Guardar cambios
+          Guardar
         </button>
       </div>
     </form>
