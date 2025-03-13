@@ -1,19 +1,7 @@
 import { Link } from "@heroui/react";
 import { isAuthenticated } from "../utils/auth";
-import { UserProfileDropdown } from "./users/UserProfileDropDown";
-
-export const AcmeLogo = () => {
-  return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-      <path
-        clipRule="evenodd"
-        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
-    </svg>
-  );
-};
+import { UserProfileDropdown } from "./users/UserProfileDropdown";
+import { TaskFlowIcon } from "./TaskFlowIcon";
 
 export const NavbarComponent = () => {
   const auth = isAuthenticated();
@@ -22,13 +10,16 @@ export const NavbarComponent = () => {
   return (
     <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2 z-10">
       <a href="/" className="flex items-center">
-        <AcmeLogo />
-        <p className="font-bold text-inherit">TASKS</p>
+        <TaskFlowIcon
+          classes={
+            "bg-primary p-2 rounded-lg mr-2 flex items-center text-white"
+          }
+        />
       </a>
       {auth?.isAuth ? (
         <>
           <li className="hidden sm:flex gap-7 *:font-medium">
-            <Link color="foreground" href="#">
+            <Link color="foreground" href="/tasks">
               Tareas
             </Link>
             {auth.user.role === "admin" ? (
