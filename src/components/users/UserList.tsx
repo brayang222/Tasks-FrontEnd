@@ -25,7 +25,7 @@ export default function UserList() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-tertiary py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br bg-secondary py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-white mb-2">Miembros</h1>

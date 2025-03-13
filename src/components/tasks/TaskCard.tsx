@@ -74,7 +74,7 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
   const { isOpen, ref, handle } = useModal();
 
   return (
-    <div className="w-full min-w-80 max-w-96 rounded-lg bg-black border border-white shadow-md h-full flex flex-col ">
+    <div className="w-full min-w-80 max-w-96 rounded-lg bg-dark border border-white shadow-md h-full flex flex-col ">
       <div className="p-4 flex justify-between items-start border-b border-gray-800">
         <div>
           <h3 className="font-medium text-lg text-white">{task.title}</h3>

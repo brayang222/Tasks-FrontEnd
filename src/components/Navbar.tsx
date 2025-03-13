@@ -8,7 +8,7 @@ export const NavbarComponent = () => {
   console.log(auth.user.name);
 
   return (
-    <div className="bg-black py-3 px-5 flex justify-between w-full border-b-2 z-10">
+    <div className="bg-dark py-3 px-5 flex justify-between w-full border-b-2 z-10">
       <a href="/" className="flex items-center">
         <TaskFlowIcon
           classes={
