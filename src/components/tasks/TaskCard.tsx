@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useModal } from "../../hooks/useModal";
 import { STATUSES, Task } from "../../schemas/Tasks";
 import { deleteTask } from "../../services/deleteTask";
 import { FormTasks } from "../forms/FormTasks";
 import ModalWithForm from "../forms/ModalWithForm";
-import { useCloseModal } from "../../hooks/useCloseModal";
+import { getUserById } from "../../services/getUserById";
+import { User } from "../../schemas/Users";
 
 interface TaskCardProps {
   task: Task;
@@ -37,8 +39,7 @@ const formatDate = (dateString: string) => {
   }).format(date);
 };
 export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState<User>();
   const statusColor = getStatusColor(task.status);
   const statusText =
     task.status.charAt(0).toUpperCase() +
@@ -55,11 +56,25 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
     }
   }
 
-  useCloseModal(dropdownRef, isOpen, () => setIsOpen(false));
+  async function handleGetUserById(id: number) {
+    try {
+      const userGetted = await getUserById(id);
+      setUser(userGetted[0]);
+
+      return userGetted;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetUserById(task.user_id);
+  }, []);
+
+  const { isOpen, ref, handle } = useModal();
 
   return (
     <div className="w-full min-w-80 max-w-96 rounded-lg bg-black border border-white shadow-md h-full flex flex-col ">
-      {/* Card Header */}
       <div className="p-4 flex justify-between items-start border-b border-gray-800">
         <div>
           <h3 className="font-medium text-lg text-white">{task.title}</h3>
@@ -84,20 +99,15 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
           </span>
         </div>
 
-        {/* Dropdown Menu (simplified) */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative" ref={ref}>
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handle}
             className="bg-gray-800 text-white px-3 py-0.5 rounded-lg cursor-pointer"
           >
             ...
           </button>
-
           {isOpen && (
-            <div
-              // ref={dropdownRef}
-              className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-md shadow-lg z-10 border border-gray-700"
-            >
+            <div className="absolute right-0 mt-2 w-48 bg-gray-900 rounded-md shadow-lg z-10 border border-gray-700">
               <div className="py-1 px-2 text-sm text-gray-300 border-b border-gray-700">
                 Acciones
               </div>
@@ -152,28 +162,24 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
           )}
         </div>
       </div>
-
-      {/* Card Content */}
       <div className="p-4 text-gray-300 ">
         <p>{task.description}</p>
       </div>
-
-      {/* Card Footer */}
-      <div className="px-4 py-3 bg-gray-900 flex justify-between items-center mt-auto rounded-b-lg">
+      <div className="px-4 py-3 bg-gray-900 flex flex-col gap-2 mt-auto rounded-b-lg">
         <div className="flex items-center text-xs text-gray-400">
           <i
             className="icon-[tabler--calendar] mr-1 h-3 w-3"
             role="img"
             aria-hidden="true"
           />
-          <span>Creado el: {formatDate(task.due_date.toString())}</span>
+          <span>{formatDate(task.due_date.toString())}</span>
         </div>
 
         {task.user_id && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400">Assigned to</span>
-            <div className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white">
-              {task.user_id}
+          <div className="flex items-center gap-2 text-right">
+            <span className="text-xs text-gray-400">Asignada a:</span>
+            <div className="p-2 h-6 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white">
+              {user?.name}
             </div>
           </div>
         )}

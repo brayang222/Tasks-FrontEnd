@@ -18,7 +18,7 @@ export default function ModalWithForm({
   classes: string;
   icon?: React.ReactNode;
 }) {
-  const { isOpen, openModal, closeModal, modalRef } = useModal();
+  const { isOpen, openModal, closeModal, ref } = useModal();
   return (
     <>
       <button className={classes} onClick={openModal}>
@@ -30,7 +30,7 @@ export default function ModalWithForm({
         <div className="fixed inset-0 bg-black/55 flex items-center justify-center z-50">
           <div
             className="bg-primary text-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6 shadow-xl"
-            ref={modalRef}
+            ref={ref}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"

@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
-import { STATUSES, Task } from "../../schemas/Tasks";
-import { updateTask } from "../../services/updateTask";
-import { User } from "../../schemas/Users";
-import { getAllUsers } from "../../services/getAllUsers";
-import { useModalContext } from "../../context/ModalContext";
-import { createTask } from "../../services/createTask";
 import { handleChange } from "../../utils/handleChange";
+import { useModalContext } from "../../context/ModalContext";
+import { STATUSES, Task } from "../../schemas/Tasks";
+import { User } from "../../schemas/Users";
+import { updateTask } from "../../services/updateTask";
+import { getAllUsers } from "../../services/getAllUsers";
+import { createTask } from "../../services/createTask";
 
 export const FormTasks = ({
   task,
   onUpdate,
   variant,
 }: {
-  task: Task;
+  task?: Task;
   onUpdate: () => void;
   variant: "create" | "update";
 }) => {
   const [users, setUsers] = useState<User[]>();
   const [taskData, setTaskData] = useState({
-    user_id: task.user_id,
-    title: task.title,
-    description: task.description,
-    status: task.status,
-    due_date: task.due_date,
+    user_id: task?.user_id || 0,
+    title: task?.title || "",
+    description: task?.description || "",
+    status: task?.status || STATUSES.PENDING,
+    due_date: task?.due_date || new Date("2025-03-10"),
   });
   const { closeModal } = useModalContext();
 
@@ -64,10 +64,6 @@ export const FormTasks = ({
   useEffect(() => {
     handleGetUsers();
   }, []);
-
-  if (variant === "create") {
-    (task.title = ""), (task.description = "");
-  }
 
   return (
     <form onSubmit={variant === "create" ? handleCreateTask : handleUpdateTask}>

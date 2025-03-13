@@ -1,28 +1,12 @@
-import { useState, useRef, useEffect } from "react";
 import { User } from "../../schemas/Users";
 import { logOut } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../../hooks/useModal";
 
 export function UserProfileDropdown({ user }: { user: User }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const { isOpen, handle, ref } = useModal();
 
   // Get initials for avatar fallback
   const getInitials = (name: string) => {
@@ -36,10 +20,10 @@ export function UserProfileDropdown({ user }: { user: User }) {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative" ref={ref}>
       {/* Dropdown Trigger */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handle}
         className="flex items-center gap-2 rounded-full p-1 transition-colors ease-linear hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
