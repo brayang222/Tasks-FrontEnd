@@ -1,5 +1,5 @@
 import { tokenKey } from "../constants";
-import { removeToken } from "./token";
+import { removeToken } from "../store/token";
 
 export const isAuthenticated = () => {
   try {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login } from "../../services/login";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../../utils/token";
+import { setToken } from "../../store/token";
 import { handleChange } from "../../utils/handleChange";
 
 export function Login() {

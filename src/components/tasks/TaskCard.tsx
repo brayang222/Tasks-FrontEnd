@@ -1,77 +1,22 @@
-import { useEffect, useState } from "react";
-import { useModal } from "../../hooks/useModal";
-import { STATUSES, Task } from "../../schemas/Tasks";
-import { deleteTask } from "../../services/deleteTask";
-import { FormTasks } from "../forms/FormTasks";
-import ModalWithForm from "../forms/ModalWithForm";
-import { getUserById } from "../../services/getUserById";
-import { User } from "../../schemas/Users";
+import { STATUSES, TaskCardProps } from "../../schemas/Tasks";
+import { formatDate } from "../../utils/formatDate";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { TasksActions } from "./TasksActions";
+import { useUserActions } from "../../hooks/useUserActions";
+import { useEffect } from "react";
 
-interface TaskCardProps {
-  task: Task;
-  onUpdate: () => void;
-  onStatusChange?: (id: number, status: STATUSES) => void;
-}
-
-const getStatusColor = (status: STATUSES) => {
-  switch (status) {
-    case STATUSES.COMPLETED:
-      return "bg-green-800 text-green-100";
-    case STATUSES.IN_PROGRESS:
-      return "bg-blue-800 text-blue-100";
-    case STATUSES.PENDING:
-      return "bg-yellow-800 text-yellow-100";
-    case STATUSES.OVERDUE:
-      return "bg-red-800 text-red-100";
-  }
-};
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("es-CO", {
-    month: "numeric",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true, // AM/PM
-    timeZone: "America/Bogota",
-  }).format(date);
-};
 export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
-  const [user, setUser] = useState<User>();
+  const { handleDeleteTask, handleGetUserById, user } =
+    useUserActions(onUpdate);
+
   const statusColor = getStatusColor(task.status);
   const statusText =
     task.status.charAt(0).toUpperCase() +
     task.status.slice(1).replace("-", " ");
 
-  async function handleDeleteTask(id: number) {
-    try {
-      const taskDeleted = await deleteTask(id);
-      onUpdate();
-      console.log("Tarea eliminada, ID: ", id, taskDeleted);
-      return taskDeleted;
-    } catch (error) {
-      console.error("Error al crear tarea:", error);
-    }
-  }
-
-  async function handleGetUserById(id: number) {
-    try {
-      const userGetted = await getUserById(id);
-      setUser(userGetted[0]);
-
-      return userGetted;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   useEffect(() => {
     handleGetUserById(task.user_id as number);
   }, []);
-
-  const { isOpen, ref, handle } = useModal();
 
   return (
     <div className="w-full rounded-lg bg-light border-2 border-dark shadow-md flex flex-col">
@@ -79,68 +24,12 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
         <div>
           <h3 className="font-medium text-xl text-dark">{task.title}</h3>
         </div>
-        <div className="relative" ref={ref}>
-          <button
-            onClick={handle}
-            className="bg-shadow text-dark px-3 py-0.5 rounded-lg cursor-pointer"
-          >
-            ...
-          </button>
-          {isOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-light rounded-md shadow-lg z-10 border border-gray-700 *:text-dark">
-              <div className="py-1 px-2 text-md font-bold border-b border-gray-700">
-                Acciones
-              </div>
-              <div className="py-1 *:cursor-pointer">
-                <ModalWithForm
-                  classes="block w-full text-left px-4 py-2 text-sm hover:bg-shadow"
-                  localize={{
-                    title: "Editar",
-                    buttonText: "Editar tarea",
-                    description:
-                      "Haz los cambios de la tarea. Dale a 'guardar' cuando termines.",
-                  }}
-                >
-                  <FormTasks task={task} onUpdate={onUpdate} variant="update" />
-                </ModalWithForm>
-                <button
-                  onClick={() =>
-                    onStatusChange?.(task.id as number, STATUSES.COMPLETED)
-                  }
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-shadow"
-                >
-                  Marcar completada
-                </button>
-                <button
-                  onClick={() =>
-                    onStatusChange?.(task.id as number, STATUSES.IN_PROGRESS)
-                  }
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-shadow"
-                >
-                  Marcar en progreso
-                </button>
-                <button
-                  onClick={() =>
-                    onStatusChange?.(task.id as number, STATUSES.PENDING)
-                  }
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-shadow"
-                >
-                  Marcar pendiente
-                </button>
-              </div>
-              <div className="border-t border-gray-700 py-1 ">
-                <button
-                  onClick={() =>
-                    task?.id !== undefined && handleDeleteTask(task.id)
-                  }
-                  className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-dark cursor-pointer"
-                >
-                  Eliminar
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+        <TasksActions
+          task={task}
+          fetchTasks={onUpdate}
+          handleDeleteTask={handleDeleteTask}
+          onStatusChange={onStatusChange}
+        />
       </div>
       <div className="p-4 text-dark/80 w-full ">
         <p>{task.description}</p>
@@ -183,7 +72,7 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
             <div className="flex border-x-2 border-y-1 border-black items-center py-1 px-2 rounded-full gap-2 *:text-nowrap">
               <span className="text-xs text-dark/60">Asignada a:</span>
               <div className="py-1 px-2 border-x-2 border-dark/50 rounded-full bg-shadow flex items-center justify-center text-xs text-dark">
-                {user?.name}
+                {user?.name || "Jon Doe"}
               </div>
             </div>
           </div>

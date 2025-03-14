@@ -5,12 +5,9 @@ import { useModal } from "../../hooks/useModal";
 
 export function UserProfileDropdown({ user }: { user: User }) {
   const navigate = useNavigate();
-
   const { isOpen, handle, ref } = useModal();
 
-  // Get initials for avatar fallback
   const getInitials = (name: string) => {
-    // console.log(name);
     return name
       .split(" ")
       .map((part) => part[0])

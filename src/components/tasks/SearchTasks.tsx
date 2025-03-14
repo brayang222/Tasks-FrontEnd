@@ -1,19 +1,10 @@
 import { useModal } from "../../hooks/useModal";
 import { STATUSES } from "../../enum/statuses.enum";
-import { Dispatch, SetStateAction } from "react";
-
-interface SearchTasksProps {
-  setFilter: Dispatch<SetStateAction<string | undefined>>;
-  filter: string | undefined;
-}
+import { handleChange } from "../../utils/handleChange";
+import { SearchTasksProps } from "../../schemas/Tasks";
 
 export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
   const { isOpen, handle, ref } = useModal();
-
-  function handleInputChange(e: any) {
-    console.log(e.target.value);
-    setFilter(e.target.value);
-  }
 
   return (
     <section className="text-dark bg-light flex flex-col w-full h-30 border border-dark/30 rounded-md">
@@ -27,14 +18,15 @@ export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
             />
             <input
               type="text"
+              name="title"
               placeholder="Buscar tareas..."
               className="w-full h-full focus:outline-none"
-              onChange={handleInputChange}
+              onChange={(e) => handleChange(e, setFilter)}
             />
           </search>
           <div className="relative inline-block text-left" ref={ref}>
             <button
-              className="flex items-center text-dark/50 cursor-pointer gap-4"
+              className="flex items-center text-dark/50 cursor-pointer gap-4 text-nowrap"
               onClick={handle}
             >
               <i
@@ -42,39 +34,41 @@ export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
                 role="img"
                 aria-hidden="true"
               />
-              {filter ? filter : "Filter"}
+              {filter.status ? filter.status : "Todas"}
             </button>
 
             {isOpen && (
-              <div className="absolute top-full mt-1 right-2 z-10  w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                <a
-                  href="#"
+              <div className="absolute top-full mt-1 right-2 z-10  w-48 bg-white border border-gray-200 rounded-md shadow-lg *:cursor-pointer">
+                <p
                   className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setFilter(undefined)}
+                  onClick={() => setFilter({ ...filter, status: undefined })}
                 >
                   Todas
-                </a>
-                <a
-                  href="#"
+                </p>
+                <p
                   className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setFilter(STATUSES.COMPLETED)}
+                  onClick={() =>
+                    setFilter({ ...filter, status: STATUSES.COMPLETED })
+                  }
                 >
                   {STATUSES.COMPLETED}
-                </a>
-                <a
-                  href="#"
+                </p>
+                <p
                   className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setFilter(STATUSES.IN_PROGRESS)}
+                  onClick={() =>
+                    setFilter({ ...filter, status: STATUSES.IN_PROGRESS })
+                  }
                 >
                   {STATUSES.IN_PROGRESS}
-                </a>
-                <a
-                  href="#"
+                </p>
+                <p
                   className="block px-4 py-2 hover:bg-gray-100"
-                  onClick={() => setFilter(STATUSES.PENDING)}
+                  onClick={() =>
+                    setFilter({ ...filter, status: STATUSES.PENDING })
+                  }
                 >
                   {STATUSES.PENDING}
-                </a>
+                </p>
               </div>
             )}
           </div>

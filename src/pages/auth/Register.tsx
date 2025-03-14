@@ -4,7 +4,7 @@ import { handleChange } from "../../utils/handleChange";
 import { createUser } from "../../services/createUser";
 import { ROLES } from "../../enum/roles.enu";
 import { login } from "../../services/login";
-import { setToken } from "../../utils/token";
+import { setToken } from "../../store/token";
 
 export function Register() {
   const [user, setUser] = useState({

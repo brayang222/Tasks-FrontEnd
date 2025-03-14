@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { STATUSES } from "../enum/statuses.enum";
 
 export interface Task {
@@ -11,3 +12,24 @@ export interface Task {
   updated_at?: Date;
 }
 export { STATUSES };
+
+export interface TaskCardProps {
+  task: Task;
+  onUpdate: () => void;
+  onStatusChange?: (id: number, status: STATUSES) => void;
+}
+
+export interface Filter {
+  status?: STATUSES;
+  title?: string | undefined;
+}
+
+export interface SearchTasksProps {
+  setFilter: Dispatch<SetStateAction<Filter>>;
+  filter: Filter;
+}
+
+export interface TasksHeaderProps {
+  setViewMode: Dispatch<SetStateAction<"list" | "grid">>;
+  fetchTasks: () => void;
+}

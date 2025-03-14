@@ -5,7 +5,7 @@ import { TaskFlowIcon } from "./TaskFlowIcon";
 
 export const NavbarComponent = () => {
   const auth = isAuthenticated();
-  console.log(auth.user.name);
+  // console.log(auth.user.name);
 
   return (
     <div className="bg-dark py-3 px-5 flex justify-between w-full border-b-2 z-10">
