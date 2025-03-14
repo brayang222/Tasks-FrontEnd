@@ -1,6 +1,6 @@
-import { getAllTasks } from "../../services/getAllTasks";
 import { useEffect, useState } from "react";
-import { Task } from "../../schemas/Tasks";
+import { getAllTasks } from "../../services/getAllTasks";
+import { STATUSES, Task } from "../../schemas/Tasks";
 import { TaskCard } from "./TaskCard";
 import { sampleTask } from "../../utils/sampleTasks";
 import ModalWithForm from "../forms/ModalWithForm";
@@ -10,14 +10,23 @@ import { SearchTasks } from "./SearchTasks";
 
 export const TasksList = () => {
   const [tasks, setTasks] = useState(sampleTask);
+  const [filter, setFilter] = useState<STATUSES | string | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   async function fetchTasks() {
     try {
       const tasksData = await getAllTasks();
-      setTasks(tasksData);
-      console.log(tasksData.length);
+      if (filter === undefined) {
+        setTasks(tasksData);
+      } else if (
+        filter &&
+        Object.values(STATUSES).includes(filter as STATUSES)
+      ) {
+        setTasks(tasksData.filter((task: Task) => task.status === filter));
+      } else {
+        setTasks(tasksData.filter((task: Task) => task.title.includes(filter)));
+      }
     } catch (error) {
       console.error("Error al obtener tareas:", error);
     } finally {
@@ -27,7 +36,9 @@ export const TasksList = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+    console.log(filter);
+    console.log(tasks);
+  }, [filter]);
 
   if (isLoading) {
     return (
@@ -87,7 +98,7 @@ export const TasksList = () => {
             </ModalWithForm>
           </div>
         </section>
-        <SearchTasks />
+        <SearchTasks setFilter={setFilter} filter={filter} />
         <div
           className={
             viewMode === "grid"

@@ -2,8 +2,6 @@ import { useMemo } from "react";
 import { STATUSES, Task } from "../../schemas/Tasks";
 
 export const AsideTasks = ({ tasks }: { tasks: Task[] }) => {
-  // const [filter, setFilter] = useState<Task[]>([]);
-
   const filteredTask = useMemo(() => {
     return {
       in_progress: tasks.filter((task) => task.status === STATUSES.IN_PROGRESS),
@@ -23,8 +21,7 @@ export const AsideTasks = ({ tasks }: { tasks: Task[] }) => {
     overdue: (overdue.length / totalTasks) * 100,
   };
 
-  console.log(filteredTask);
-  console.log();
+  // console.log(filteredTask);
 
   return (
     <aside className="min-h-screen w-72 border-r-2 border-dark flex flex-col gap-4">
