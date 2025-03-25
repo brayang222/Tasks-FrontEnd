@@ -71,7 +71,7 @@ export function TaskCard({ task, onUpdate, onStatusChange }: TaskCardProps) {
           <div className="flex items-center gap-2 text-right">
             <div className="flex border-x-2 border-y-1 border-black items-center py-1 px-2 rounded-full gap-2 *:text-nowrap">
               <span className="text-xs text-dark/60">Asignada a:</span>
-              <div className="py-1 px-2 border-x-2 border-dark/50 rounded-full bg-shadow flex items-center justify-center text-xs text-dark">
+              <div className="py-1 px-2  rounded-full bg-shadow flex items-center justify-center text-xs text-dark">
                 {user?.name || "Jon Doe"}
               </div>
             </div>

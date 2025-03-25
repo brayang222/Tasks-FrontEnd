@@ -27,6 +27,7 @@ export interface Filter {
 export interface SearchTasksProps {
   setFilter: Dispatch<SetStateAction<Filter>>;
   filter: Filter;
+  tasks: Task[];
 }
 
 export interface TasksHeaderProps {

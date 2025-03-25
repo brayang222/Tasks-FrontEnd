@@ -2,9 +2,11 @@ import { useModal } from "../../hooks/useModal";
 import { STATUSES } from "../../enum/statuses.enum";
 import { handleChange } from "../../utils/handleChange";
 import { SearchTasksProps } from "../../schemas/Tasks";
+import { useTotalFilteredTasks } from "../../hooks/useTotalFilteredTasks";
 
-export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
+export const SearchTasks = ({ setFilter, filter, tasks }: SearchTasksProps) => {
   const { isOpen, handle, ref } = useModal();
+  const { totalTasks } = useTotalFilteredTasks(tasks);
 
   return (
     <section className="text-dark bg-light flex flex-col w-full h-30 border border-dark/30 rounded-md">
@@ -73,7 +75,7 @@ export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
             )}
           </div>
         </div>
-        <h4 className="text-lg text-dark/60">Mostrando 8 tareas</h4>
+        <h4 className="text-lg text-dark/60">Mostrando {totalTasks} tareas</h4>
       </div>
     </section>
   );

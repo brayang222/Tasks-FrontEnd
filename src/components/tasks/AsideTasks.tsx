@@ -4,7 +4,6 @@ import { useTotalFilteredTasks } from "../../hooks/useTotalFilteredTasks";
 export const AsideTasks = ({ tasks }: { tasks: Task[] }) => {
   const { totalTasks, in_progress, pending, completed, overdue, percentages } =
     useTotalFilteredTasks(tasks);
-  // console.log(filteredTask);
 
   return (
     <aside className="min-h-screen w-72 border-r-2 border-dark flex flex-col gap-4">

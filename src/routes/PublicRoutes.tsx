@@ -4,7 +4,7 @@ import { Register } from "../pages/auth/Register";
 import { Login } from "../pages/auth/Login";
 import { NotFound } from "../components/NotFound";
 import LandingPage from "../components/landing/Langing";
-import { Layout } from "../components/Layout";
+import { Layout } from "../components/layout/Layout";
 
 export const PublicRoutes = () => {
   return (

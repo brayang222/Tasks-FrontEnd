@@ -1,4 +1,4 @@
-import image from "../../assets/interface.png";
+import image from "../../assets/interface.webp";
 
 export const LandingHero = () => {
   return (

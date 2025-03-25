@@ -25,7 +25,7 @@ export const TasksList = () => {
       <AsideTasks tasks={tasks} />
       <div className="flex flex-col p-6 gap-8 w-full bg-secondary">
         <TasksHeader setViewMode={setViewMode} fetchTasks={fetchTasks} />
-        <SearchTasks filter={filter} setFilter={setFilter} />
+        <SearchTasks filter={filter} setFilter={setFilter} tasks={tasks} />
         <div
           className={
             viewMode === "grid"
