@@ -6,7 +6,6 @@ export function setToken(user: string) {
 
 export function getToken() {
   const token = localStorage.getItem(tokenKey);
-  console.log(token);
   return token;
 }
 

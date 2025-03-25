@@ -3,9 +3,9 @@ import { handleChange } from "../../utils/handleChange";
 import { useModalContext } from "../../context/ModalContext";
 import { STATUSES, Task } from "../../schemas/Tasks";
 import { User } from "../../schemas/Users";
-import { updateTask } from "../../services/updateTask";
-import { getAllUsers } from "../../services/getAllUsers";
-import { createTask } from "../../services/createTask";
+import { getAllUsers } from "../../services/users/getAllUsers";
+import { updateTask } from "../../services/task/updateTask";
+import { createTask } from "../../services/task/createTask";
 
 export const FormTasks = ({
   task,
@@ -66,9 +66,12 @@ export const FormTasks = ({
   }, []);
 
   return (
-    <form onSubmit={variant === "create" ? handleCreateTask : handleUpdateTask}>
+    <form
+      onSubmit={variant === "create" ? handleCreateTask : handleUpdateTask}
+      className=""
+    >
       <div className="mb-5">
-        <label htmlFor="title" className="block mb-2 font-medium">
+        <label htmlFor="title" className="block mb-2 font-medium text-dark">
           Título
         </label>
         <input
@@ -78,11 +81,14 @@ export const FormTasks = ({
           value={taskData.title}
           onChange={(e) => handleChange(e, setTaskData)}
           required
-          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-3 py-2 bg-dark border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
-      <div className="mb-5">
-        <label htmlFor="description" className="block mb-2 font-medium">
+      <div className="mb-5 ">
+        <label
+          htmlFor="description"
+          className="block mb-2 font-medium text-dark"
+        >
           Descripción
         </label>
         <textarea
@@ -92,13 +98,13 @@ export const FormTasks = ({
           value={taskData.description}
           onChange={(e) => handleChange(e, setTaskData)}
           placeholder="Da una descripción detallada de la tarea"
-          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
+          className="w-full px-3 py-2 bg-dark border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
         ></textarea>
       </div>
 
       <div className="mb-5">
-        <label htmlFor="status" className="block mb-2 font-medium">
-          ESTADO:
+        <label htmlFor="status" className="block mb-2 font-medium text-dark">
+          Estado:
         </label>
         <select
           id="status"
@@ -106,7 +112,7 @@ export const FormTasks = ({
           required
           value={taskData.status}
           onChange={(e) => handleChange(e, setTaskData)}
-          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+          className="w-full px-3 py-2 bg-dark border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           {Object.values(STATUSES).map((status) => (
             <option value={String(status)} key={String(status)}>
@@ -117,7 +123,7 @@ export const FormTasks = ({
       </div>
 
       <div className="mb-5">
-        <label htmlFor="user_id" className="block mb-2 font-medium">
+        <label htmlFor="user_id" className="block mb-2 font-medium text-dark">
           Usuario asignado
         </label>
         <select
@@ -126,11 +132,11 @@ export const FormTasks = ({
           required
           value={taskData.user_id}
           onChange={(e) => handleChange(e, setTaskData)}
-          className="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+          className="w-full px-3 py-2 bg-dark border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           {users &&
             users.map((user) => (
-              <option value={user.id} key={user.id}>
+              <option value={user.id} key={user.id} className="cursor-pointer">
                 {user.email}
               </option>
             ))}
@@ -140,7 +146,7 @@ export const FormTasks = ({
       <div className="flex justify-end mt-6">
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
+          className="bg-primary text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer"
         >
           Guardar cambios
         </button>

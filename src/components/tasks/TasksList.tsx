@@ -1,34 +1,16 @@
-import { getAllTasks } from "../../services/getAllTasks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Task } from "../../schemas/Tasks";
 import { TaskCard } from "./TaskCard";
-import { sampleTask } from "../../utils/sampleTasks";
-import ModalWithForm from "../forms/ModalWithForm";
-import { FormTasks } from "../forms/FormTasks";
+
+import { AsideTasks } from "./AsideTasks";
+import { SearchTasks } from "./SearchTasks";
+import { TasksHeader } from "./TasksHeader";
+import { useFilteredTasks } from "../../hooks/useFilteredTasks";
 
 export const TasksList = () => {
-  const [tasks, setTasks] = useState(sampleTask);
-  const [isLoading, setIsLoading] = useState(true);
-
-  async function fetchTasks() {
-    try {
-      const tasksData = await getAllTasks();
-      setTasks(tasksData);
-      console.log(tasksData);
-    } catch (error) {
-      console.error("Error al obtener tareas:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  function onUpdate() {
-    console.log("Updated");
-  }
+  const { isLoading, tasks, fetchTasks, filter, setFilter } =
+    useFilteredTasks();
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   if (isLoading) {
     return (
@@ -39,23 +21,23 @@ export const TasksList = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center pt-5">
-      <ModalWithForm
-        classes="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
-        localize={{
-          title: "Crear",
-          buttonText: "Crear tarea",
-          description:
-            "Rellena todos los campos de la tarea. Dale a 'crear' cuando termines.",
-        }}
-      >
-        <FormTasks onUpdate={onUpdate} variant="create" />
-      </ModalWithForm>
-      <div className="w-full h-full p-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-content-center">
-        {tasks.map((task: Task) => (
-          <TaskCard onUpdate={fetchTasks} task={task} key={task.id} />
-        ))}
+    <main className="w-full min-h-screen flex">
+      <AsideTasks tasks={tasks} />
+      <div className="flex flex-col p-6 gap-8 w-full bg-secondary">
+        <TasksHeader setViewMode={setViewMode} fetchTasks={fetchTasks} />
+        <SearchTasks filter={filter} setFilter={setFilter} />
+        <div
+          className={
+            viewMode === "grid"
+              ? "w-full h-full grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-content-start"
+              : "w-full h-full flex flex-col gap-4"
+          }
+        >
+          {tasks.map((task: Task) => (
+            <TaskCard onUpdate={fetchTasks} task={task} key={task.id} />
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 };

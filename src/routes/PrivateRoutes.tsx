@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { isAuthenticated } from "../utils/auth";
 import UserList from "../components/users/UserList";
+import { NavbarComponent } from "../components/Navbar";
 
 export function PrivateRoutes() {
   const auth = isAuthenticated();
@@ -12,8 +13,10 @@ export function PrivateRoutes() {
 
   return (
     <Routes>
-      <Route path="/" />
-      <Route path="/users" element={<UserList />} />
+      <Route element={<NavbarComponent />}>
+        <Route path="/" />
+        <Route path="/users" element={<UserList />} />
+      </Route>
     </Routes>
   );
 }

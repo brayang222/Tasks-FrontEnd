@@ -1,4 +1,4 @@
-import { ROLES } from "../enum/roles.enu";
+import { ROLES } from "../enum/roles.enum";
 import { User } from "../schemas/Users";
 
 export const initialUsers: User[] = [

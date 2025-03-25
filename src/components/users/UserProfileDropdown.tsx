@@ -5,12 +5,9 @@ import { useModal } from "../../hooks/useModal";
 
 export function UserProfileDropdown({ user }: { user: User }) {
   const navigate = useNavigate();
-
   const { isOpen, handle, ref } = useModal();
 
-  // Get initials for avatar fallback
   const getInitials = (name: string) => {
-    // console.log(name);
     return name
       .split(" ")
       .map((part) => part[0])
@@ -20,7 +17,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
   };
 
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative z-10" ref={ref}>
       {/* Dropdown Trigger */}
       <button
         onClick={handle}
@@ -62,12 +59,12 @@ export function UserProfileDropdown({ user }: { user: User }) {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-64 rounded-md border border-gray-200 bg-primary shadow-lg"
+          className="absolute right-0 mt-2 w-64 rounded-md border border-dark bg-secondary shadow-lg"
           role="menu"
         >
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-4 border-b border-dark">
             <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-200">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full bg-dark">
                 {user.avatar ? (
                   <img
                     src={user.avatar || "/placeholder.svg"}
@@ -75,21 +72,21 @@ export function UserProfileDropdown({ user }: { user: User }) {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <span className="flex h-full w-full items-center justify-center text-sm font-medium text-primary">
+                  <span className="flex h-full w-full items-center justify-center text-sm font-medium text-light">
                     {getInitials(user.name)}
                   </span>
                 )}
               </div>
               <div className="flex flex-col">
-                <span className="font-medium">{user.name}</span>
-                <span className="text-xs text-gray-500">{user.email}</span>
+                <span className="font-medium text-dark">{user.name}</span>
+                <span className="text-xs text-dark">{user.email}</span>
               </div>
             </div>
           </div>
 
           <div className="p-2 ">
             <button
-              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left hover:bg-gray-100 hover:text-primary cursor-pointer transition-colors ease-linear"
+              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-dark hover:bg-gray-100 cursor-pointer transition-colors ease-linear"
               role="menuitem"
             >
               <i
@@ -101,7 +98,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
             </button>
 
             <button
-              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left hover:bg-gray-100 hover:text-primary cursor-pointer transition-colors ease-linear"
+              className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-dark hover:bg-gray-100 cursor-pointer transition-colors ease-linear"
               role="menuitem"
             >
               <i

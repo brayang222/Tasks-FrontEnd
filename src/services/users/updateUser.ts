@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { User } from "../schemas/Users";
+import { User } from "../../schemas/Users";
 
 export const updateUser = async (id: number, user: User) => {
   const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJyYXlhbjNAZ21haWwuY29tIiwiaWF0IjoxNzQxNjUwMzg4LCJleHAiOjE3NDIyNTUxODh9._5VoKwj76G7zYu9XirejcY1cDdEaItBsrzlDLFVLRGc`;
