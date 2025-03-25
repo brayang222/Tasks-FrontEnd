@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { User } from "../../schemas/Users";
 import { useModalContext } from "../../context/ModalContext";
-import { updateUser } from "../../services/updateUser";
-import { createUser } from "../../services/createUser";
-import { ROLES } from "../../enum/roles.enu";
+import { ROLES } from "../../enum/roles.enum";
 import { handleChange } from "../../utils/handleChange";
+import { createUser } from "../../services/users/createUser";
+import { updateUser } from "../../services/users/updateUser";
 
 export const FormUser = ({
   user,

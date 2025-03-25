@@ -17,7 +17,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
   };
 
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative z-10" ref={ref}>
       {/* Dropdown Trigger */}
       <button
         onClick={handle}

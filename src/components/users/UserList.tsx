@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UserCard } from "./UserCard";
-import { getAllUsers } from "../../services/getAllUsers";
+import { getAllUsers } from "../../services/users/getAllUsers";
 import { User } from "../../schemas/Users";
 import { FormUser } from "../forms/FormUser";
 import ModalWithForm from "../forms/ModalWithForm";
@@ -27,10 +27,10 @@ export default function UserList() {
   return (
     <div className="min-h-screen bg-gradient-to-br bg-secondary py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-white mb-2">Miembros</h1>
-          <p className="text-white max-w-md mx-auto">
-            Manage your team members and their account permissions here
+        <div className="text-center mb-10 *:text-tertiary">
+          <h1 className="text-3xl font-bold mb-2">Miembros</h1>
+          <p className=" max-w-md mx-auto">
+            Maneja los miembros de tú equipo, sus cuentas y permisos aquí.
           </p>
           <ModalWithForm
             classes="p-2 rounded-lg bg-gray-50 hover:bg-indigo-50 text-gray-600 hover:text-indigo-600 transition-colors border border-gray-100 hover:border-indigo-200 cursor-pointer flex gap-2 items-center"

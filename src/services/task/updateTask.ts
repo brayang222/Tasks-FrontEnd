@@ -1,19 +1,19 @@
 import axios, { AxiosError } from "axios";
-import { Task } from "../schemas/Tasks";
-import { formatTaskForMySQL } from "../utils/formatTaskForMySQL";
+import { formatTaskForMySQL } from "../../utils/formatTaskForMySQL";
+import { Task } from "../../schemas/Tasks";
 
-export const createTask = async (task: Task) => {
+export const updateTask = async (id: number, task: Task) => {
+  const formattedTask = formatTaskForMySQL(task);
   try {
-    const formattedTask = formatTaskForMySQL(task);
-
     const options = {
-      method: "POST",
-      url: "http://localhost:5100/tasks",
+      method: "PUT",
+      url: `http://localhost:5100/tasks/${id}`,
       data: formattedTask,
       headers: {
         accept: "application/json",
       },
     };
+
     const { data } = await axios.request(options);
     return data;
   } catch (error) {

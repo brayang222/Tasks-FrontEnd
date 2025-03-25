@@ -1,5 +1,5 @@
 import { User } from "../../schemas/Users";
-import { deleteUser } from "../../services/deleteUser";
+import { deleteUser } from "../../services/users/deleteUser";
 import { getRoleStyles } from "../../utils/getRoleStyles";
 import { FormUser } from "../forms/FormUser";
 import ModalWithForm from "../forms/ModalWithForm";

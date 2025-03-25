@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { deleteTask } from "../services/deleteTask";
-import { getUserById } from "../services/getUserById";
+import { deleteTask } from "../services/task/deleteTask";
+import { getUserById } from "../services/users/getUserById";
 import { User } from "../schemas/Users";
 
 export const useUserActions = (onUpdate: () => void) => {

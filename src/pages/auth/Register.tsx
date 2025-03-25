@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleChange } from "../../utils/handleChange";
-import { createUser } from "../../services/createUser";
-import { ROLES } from "../../enum/roles.enu";
+import { ROLES } from "../../enum/roles.enum";
 import { login } from "../../services/login";
 import { setToken } from "../../store/token";
+import { createUser } from "../../services/users/createUser";
 
 export function Register() {
   const [user, setUser] = useState({

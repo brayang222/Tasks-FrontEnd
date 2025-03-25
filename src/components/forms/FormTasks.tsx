@@ -3,9 +3,9 @@ import { handleChange } from "../../utils/handleChange";
 import { useModalContext } from "../../context/ModalContext";
 import { STATUSES, Task } from "../../schemas/Tasks";
 import { User } from "../../schemas/Users";
-import { updateTask } from "../../services/updateTask";
-import { getAllUsers } from "../../services/getAllUsers";
-import { createTask } from "../../services/createTask";
+import { getAllUsers } from "../../services/users/getAllUsers";
+import { updateTask } from "../../services/task/updateTask";
+import { createTask } from "../../services/task/createTask";
 
 export const FormTasks = ({
   task,

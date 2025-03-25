@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { User } from "../schemas/Users";
+import { User } from "../../schemas/Users";
 
 export const createUser = async (user: User) => {
   try {

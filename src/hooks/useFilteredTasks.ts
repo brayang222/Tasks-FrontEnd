@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { sampleTask } from "../utils/sampleTasks";
-import { getAllTasks } from "../services/getAllTasks";
+import { getAllTasks } from "../services/task/getAllTasks";
 import { Filter, Task } from "../schemas/Tasks";
 
 export const useFilteredTasks = () => {
