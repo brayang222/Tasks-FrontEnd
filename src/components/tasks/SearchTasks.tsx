@@ -2,14 +2,16 @@ import { useModal } from "../../hooks/useModal";
 import { STATUSES } from "../../enum/statuses.enum";
 import { handleChange } from "../../utils/handleChange";
 import { SearchTasksProps } from "../../schemas/Tasks";
+import { useTotalFilteredTasks } from "../../hooks/useTotalFilteredTasks";
 
-export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
+export const SearchTasks = ({ setFilter, filter, tasks }: SearchTasksProps) => {
   const { isOpen, handle, ref } = useModal();
+  const { totalTasks } = useTotalFilteredTasks(tasks);
 
   return (
     <section className="text-dark bg-light flex flex-col w-full h-30 border border-dark/30 rounded-md">
       <div className="flex flex-col m-4 gap-2">
-        <div className="flex w-full gap-4 *:flex *:items-center *:border-dark *:border-2 *:text-xl *:p-2 *:gap-4 *:rounded-md">
+        <div className="flex w-full gap-4 *:flex *:items-center *:border-dark *:border-2 *:text-md *:md:text-xl *:p-2 *:gap-4 *:rounded-md">
           <search className="w-full">
             <i
               className="icon-[tdesign--search]"
@@ -73,7 +75,9 @@ export const SearchTasks = ({ setFilter, filter }: SearchTasksProps) => {
             )}
           </div>
         </div>
-        <h4 className="text-lg text-dark/60">Mostrando 8 tareas</h4>
+        <h4 className="text-sm md:text-lg text-dark/60">
+          Mostrando {totalTasks} tareas
+        </h4>
       </div>
     </section>
   );

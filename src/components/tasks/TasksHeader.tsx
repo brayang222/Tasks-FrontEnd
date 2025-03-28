@@ -4,10 +4,12 @@ import { TasksHeaderProps } from "../../schemas/Tasks";
 
 export const TasksHeader = ({ setViewMode, fetchTasks }: TasksHeaderProps) => {
   return (
-    <section className="flex justify-between">
+    <section className="flex justify-between flex-col md:flex-row gap-3">
       <div className="flex flex-col gap-1">
-        <h4 className="text-dark text-3xl font-bold">Mis Tareas</h4>
-        <p className="text-dark/50 text-xl">Maneja y organiza tus tareas</p>
+        <h4 className="text-dark text-lg md:text-3xl font-bold">Mis Tareas</h4>
+        <p className="text-dark/50 text-md md:text-xl">
+          Maneja y organiza tus tareas
+        </p>
       </div>
       <div className="flex items-center gap-3 *:cursor-pointer">
         <button

@@ -18,10 +18,9 @@ export function UserProfileDropdown({ user }: { user: User }) {
 
   return (
     <div className="relative z-10" ref={ref}>
-      {/* Dropdown Trigger */}
       <button
         onClick={handle}
-        className="flex items-center gap-2 rounded-full p-1 transition-colors ease-linear hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+        className="flex items-center gap-2 rounded-full p-1 transition-colors ease-linear hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -56,7 +55,6 @@ export function UserProfileDropdown({ user }: { user: User }) {
         </svg>
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <div
           className="absolute right-0 mt-2 w-64 rounded-md border border-dark bg-secondary shadow-lg"

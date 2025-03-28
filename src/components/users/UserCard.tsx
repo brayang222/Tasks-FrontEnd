@@ -25,48 +25,50 @@ export function UserCard({ user, onUpdate }: UserCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md shadow-secondary transition-all duration-300 border border-gray-100 overflow-hidden">
-      <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+    <section className="bg-white rounded-xl shadow-sm hover:shadow-md shadow-secondary transition-all duration-300 border border-gray-100 overflow-hidden">
+      <div className="p-6 flex flex-col sm:flex-row sm:items-center ">
         {/* Avatar Section */}
-        <div className="flex-shrink-0">
-          {user.avatar ? (
-            <img
-              src={user.avatar || "/placeholder.svg"}
-              alt={user.name}
-              className="w-16 h-16 rounded-full object-cover border-2 border-gray-100 shadow-sm"
-            />
-          ) : (
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 shadow-sm">
+        <section className="flex flex-row gap-4 sm:gap-6">
+          <div className="flex-shrink-0">
+            {user.avatar ? (
+              <img
+                src={user.avatar || "/placeholder.svg"}
+                alt={user.name}
+                className="w-16 h-16 rounded-full object-cover border-2 border-gray-100 shadow-sm"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 shadow-sm">
+                <i
+                  className="icon-[zondicons--user] h-8 w-8"
+                  role="img"
+                  aria-hidden="true"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* User Info Section */}
+          <div className="flex-grow">
+            <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
+            <div className="flex items-center mt-1 text-gray-500">
               <i
-                className="icon-[zondicons--user] h-8 w-8"
+                className="icon-[lucide--mail] h-3.5 w-3.5 mr-1.5"
                 role="img"
                 aria-hidden="true"
               />
+              <p className="text-sm">{user.email}</p>
             </div>
-          )}
-        </div>
 
-        {/* User Info Section */}
-        <div className="flex-grow">
-          <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
-          <div className="flex items-center mt-1 text-gray-500">
-            <i
-              className="icon-[lucide--mail] h-3.5 w-3.5 mr-1.5"
-              role="img"
-              aria-hidden="true"
-            />
-            <p className="text-sm">{user.email}</p>
+            <div className="flex items-center mt-3">
+              <span
+                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${roleStyles.bg} ${roleStyles.text} ${roleStyles.border} border`}
+              >
+                <i className="h-3 w-3 mr-1">{roleStyles.icon}</i>
+                {user.role}
+              </span>
+            </div>
           </div>
-
-          <div className="flex items-center mt-3">
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${roleStyles.bg} ${roleStyles.text} ${roleStyles.border} border`}
-            >
-              <i className="h-3 w-3 mr-1">{roleStyles.icon}</i>
-              {user.role}
-            </span>
-          </div>
-        </div>
+        </section>
 
         {/* Actions Section */}
         <div className="flex sm:flex-col gap-2 sm:gap-3 ml-auto">
@@ -101,6 +103,6 @@ export function UserCard({ user, onUpdate }: UserCardProps) {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
