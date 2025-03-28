@@ -1,14 +1,15 @@
 import { Link } from "@heroui/react";
-import { isAuthenticated } from "../utils/auth";
-import { UserProfileDropdown } from "./users/UserProfileDropdown";
-import { TaskFlowIcon } from "./TaskFlowIcon";
+import { isAuthenticated } from "../../utils/auth";
+import { TaskFlowIcon } from "../TaskFlowIcon";
+import { UserProfileDropdown } from "../users/UserProfileDropdown";
+import BurgerMenu from "./BurguerMenu";
+import { LinksNavbar } from "./LinksNavbar";
 
 export const NavbarComponent = () => {
   const auth = isAuthenticated();
-  // console.log(auth.user.name);
 
   return (
-    <div className="bg-dark py-3 px-5 flex justify-between w-full border-b-2 z-10">
+    <nav className="bg-dark py-3 px-5 flex items-center text-center justify-between w-full border-b-2 z-10">
       <a href="/" className="flex items-center">
         <TaskFlowIcon
           classes={
@@ -18,22 +19,13 @@ export const NavbarComponent = () => {
       </a>
       {auth?.isAuth ? (
         <>
-          <li className="hidden sm:flex gap-7 *:font-medium">
-            <Link color="foreground" href="/tasks">
-              Tareas
-            </Link>
-            {auth.user.role === "admin" ? (
-              <Link color="foreground" aria-current="page" href="/admin/users">
-                Users
-              </Link>
-            ) : (
-              <></>
-            )}
-            <Link color="foreground" href="#">
-              Mis Tareas
-            </Link>
-          </li>
-          <UserProfileDropdown user={auth.user} />
+          <div className="hidden sm:flex">
+            <LinksNavbar className="text-secondary" user={auth.user} />
+          </div>
+          <section className="flex items-center">
+            <UserProfileDropdown user={auth.user} />
+            <BurgerMenu user={auth.user} />
+          </section>
         </>
       ) : (
         <div className="flex gap-4 *:font-medium">
@@ -45,6 +37,6 @@ export const NavbarComponent = () => {
           </Link>
         </div>
       )}
-    </div>
+    </nav>
   );
 };

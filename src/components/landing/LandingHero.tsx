@@ -13,16 +13,24 @@ export const LandingHero = () => {
           productividad, y conseguir tus metas con una simple e intuitiva
           interfaz
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 *:px-8 *:py-3 *:rounded-md *:cursor-pointer *:text-white">
-          <button className="flex items-center bg-primary">
+        <div className="flex flex-col sm:flex-row  gap-4 *:px-8 *:py-3 *:rounded-md *:text-white">
+          <a
+            className="flex items-center justify-center bg-primary "
+            href="/login"
+          >
             Empieza gratis
             <i
               className="icon-[material-symbols--arrow-forward] ml-2 h-5 w-5"
               role="img"
               aria-hidden="true"
             />
-          </button>
-          <button className="bg-tertiary ">Aprender más</button>
+          </a>
+          <a
+            className="bg-tertiary transition-all scroll-smooth"
+            href="#how-works"
+          >
+            Aprender más
+          </a>
         </div>
       </div>
       <div className="md:w-1/2 flex justify-center">

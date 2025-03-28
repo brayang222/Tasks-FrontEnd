@@ -1,10 +1,10 @@
-import { TaskFlowIcon } from "./TaskFlowIcon";
+import { TaskFlowIcon } from "../TaskFlowIcon";
 
 export const Footer = () => {
   return (
     <footer className="bg-dark text-secondary py-12">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8">
+        <section className="grid md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center mb-4">
               <TaskFlowIcon
@@ -53,7 +53,7 @@ export const Footer = () => {
               </ul>
             </div>
           ))}
-        </div>
+        </section>
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
           <p>
