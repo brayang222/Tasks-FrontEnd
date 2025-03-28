@@ -1,3 +1,0 @@
-Crear tareas, usuario administrador, 
-el puede agregar miembros y editar, el miembro 
-solo puede verlas y cambiarles el status

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "sonner";
+import { throwError } from "../utils/throwError";
 
 export const login = async (user: { email: string; password: string }) => {
   try {
@@ -11,8 +13,10 @@ export const login = async (user: { email: string; password: string }) => {
       },
     };
     const { data } = await axios.request(options);
+    toast.success("Sesión iniciada");
+
     return data;
   } catch (error) {
-    throw error;
+    throwError({ message: "No se pudo iniciar sesión", error });
   }
 };

@@ -6,7 +6,6 @@ export const isAuthenticated = () => {
     const user = localStorage.getItem(tokenKey);
     if (!user) return { isAuth: false, user: "" };
     const payload = JSON.parse(user);
-    // console.log(payload);
 
     return { isAuth: true, user: payload.user };
   } catch (error) {

@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { throwError } from "../../utils/throwError";
 
 export const getAllUsers = async () => {
   try {
@@ -9,9 +10,9 @@ export const getAllUsers = async () => {
     const { data } = await axios.request(options);
     return data;
   } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 404) {
-      throw new Error("NOT_FOUND");
-    }
-    throw error;
+    throwError({
+      error,
+      message: "Usando los ejemplos...",
+    });
   }
 };
