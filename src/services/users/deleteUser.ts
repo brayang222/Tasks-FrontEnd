@@ -1,13 +1,17 @@
 import axios, { AxiosError } from "axios";
+import { BACK_END_URL } from "../../constants";
+import { getToken } from "../../store/token";
 
 export const deleteUser = async (id: number) => {
-  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJyYXlhbjNAZ21haWwuY29tIiwiaWF0IjoxNzQxNjUwMzg4LCJleHAiOjE3NDIyNTUxODh9._5VoKwj76G7zYu9XirejcY1cDdEaItBsrzlDLFVLRGc`;
+  const token = getToken();
+  const parsedToken = token ? JSON.parse(token) : null;
+
   try {
     const options = {
       method: "DELETE",
-      url: `http://localhost:5100/users/delete/${id}`,
+      url: `https://${BACK_END_URL}/users/delete/${id}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${parsedToken}`,
         "Content-Type": "application/json",
       },
     };

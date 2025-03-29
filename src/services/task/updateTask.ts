@@ -1,13 +1,14 @@
-import axios, { AxiosError } from "axios";
+import { BACK_END_URL } from "../../constants";
 import { formatTaskForMySQL } from "../../utils/formatTaskForMySQL";
 import { Task } from "../../schemas/Tasks";
+import axios, { AxiosError } from "axios";
 
 export const updateTask = async (id: number, task: Task) => {
   const formattedTask = formatTaskForMySQL(task);
   try {
     const options = {
       method: "PUT",
-      url: `http://localhost:5100/tasks/${id}`,
+      url: `https://${BACK_END_URL}/tasks/${id}`,
       data: formattedTask,
       headers: {
         accept: "application/json",

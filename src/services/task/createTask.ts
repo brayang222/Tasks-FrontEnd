@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
+import { BACK_END_URL } from "../../constants";
 import { formatTaskForMySQL } from "../../utils/formatTaskForMySQL";
 import { Task } from "../../schemas/Tasks";
+import axios, { AxiosError } from "axios";
 
 export const createTask = async (task: Task) => {
   try {
@@ -8,7 +9,7 @@ export const createTask = async (task: Task) => {
 
     const options = {
       method: "POST",
-      url: "http://localhost:5100/tasks",
+      url: `https://${BACK_END_URL}/tasks`,
       data: formattedTask,
       headers: {
         accept: "application/json",

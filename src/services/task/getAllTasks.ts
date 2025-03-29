@@ -1,10 +1,11 @@
+import { BACK_END_URL } from "../../constants";
 import axios, { AxiosError } from "axios";
 
 export const getAllTasks = async () => {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:5100/tasks",
+      url: `https://${BACK_END_URL}/tasks`,
       headers: {
         accept: "application/json",
       },

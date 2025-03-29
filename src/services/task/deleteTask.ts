@@ -1,10 +1,11 @@
 import axios, { AxiosError } from "axios";
+import { BACK_END_URL } from "../../constants";
 
 export const deleteTask = async (id: number) => {
   try {
     const options = {
       method: "DELETE",
-      url: `http://localhost:5100/tasks/${id}`,
+      url: `https://${BACK_END_URL}/tasks/${id}`,
       headers: {
         accept: "application/json",
       },
