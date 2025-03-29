@@ -1,17 +1,19 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { throwError } from "../../utils/throwError";
+import { BACK_END_URL } from "../../constants";
 
 export const getAllUsers = async () => {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:5100/users",
+      url: `https://${BACK_END_URL}/users`,
     };
     const { data } = await axios.request(options);
     return data;
   } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 404) {
-      throw new Error("NOT_FOUND");
-    }
-    throw error;
+    throwError({
+      error,
+      message: "Usando los ejemplos...",
+    });
   }
 };
