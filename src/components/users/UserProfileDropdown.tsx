@@ -92,7 +92,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
                 role="img"
                 aria-hidden="true"
               />
-              <span>Profile</span>
+              <span>Perfil</span>
             </button>
 
             <button
@@ -104,7 +104,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
                 role="img"
                 aria-hidden="true"
               />
-              <span>Settings</span>
+              <span>Configuración</span>
             </button>
 
             <button
@@ -117,7 +117,7 @@ export function UserProfileDropdown({ user }: { user: User }) {
                 role="img"
                 aria-hidden="true"
               />
-              <span>Logout</span>
+              <span>Cerrar sesión</span>
             </button>
           </div>
         </div>
