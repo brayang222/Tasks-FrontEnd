@@ -2,7 +2,7 @@
 
 Este es el repositorio del front-end de la aplicación **Tasks**, una herramienta para la gestión de tareas que permite a los usuarios organizar, priorizar y completar sus actividades de manera eficiente. Este proyecto está desarrollado con **React**, **TypeScript** y **Vite**.
 
-[Página](https://tasks-front-end.vercel.app)
+[Página](https://tasks-front-end.vercel.app) (ingresa con las credenciales como administrador: email: "Brayangomez521@gmail.com", clave: "1234")
 
 El back-end de la aplicación está desplegado en **Railway** y puedes encontrar su repositorio aquí: [Tasks Back-End](https://github.com/brayang222/Tasks-BackEnd.git).
 
